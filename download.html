@@ -1,0 +1,75 @@
+---
+layout: content
+title: Download
+group: navigation
+order: 1
+---
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="javascript/site.js"></script>
+
+<h1>Downloading Mono for Unreal Engine</h1>
+<p class="lead">Verifying access and downloading Mono for Unreal Engine.
+
+<p>Before you can download <em>Mono for Unreal Engine</em>, we first
+have to make sure you are a licensed Unreal Engine developer and
+have access to version 4.4.3. To begin this process, please fill out the
+request form at the bottom of this page, and we will contact you with
+further instructions.
+
+<p>To verify that you have access to Unreal Engine, we require
+you to provide the parent hash of a randomly chosen commit in
+the Unreal Engine git repository.
+
+<p>To get the correct parent hash, follow the steps below:</p>
+
+<ol>
+	<li>Go to <a id="hash-link" target="_blank">(loading...)</a>. It should take 
+        you to a github page with something that looks like this at the top:
+	<p><img src="images/commit_message.png" /></p></li>
+	<li>Click on the "parent" link at the bottom of the commit message:
+	<p><img src="images/commit_message_parent.png" /></p></li>
+	<li>This should take you to a new page. Copy the commit hash from
+	this new page, found in the same place as the last page.
+	<p><img src="images/commit_message_hash.png" /></p></li>
+	<li>Paste it in the "Parent Hash" field in the form.</li>
+	<li>Fill out the rest of the form and submit it.</li>
+</ol>
+
+<div id="msg"></div>
+
+<form id="form" method="post" action="https://unreal-xamarin.azurewebsites.net/api/verify/">
+	<fieldset>
+		<legend>Request access to <em>Mono for Unreal Engine</em></legend>
+        <div class="form-group">
+            <label for="cname">Name:</label>
+            <input id="cname" name="fullName" minlength="2" type="text" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="cemail">E-Mail:</label>
+            <input id="cemail" type="email" name="email" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="cphone">Phone Number:</label>
+            <input id="cphone" type="tel" name="phone" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="caddress">Address:</label>
+            <textarea id="caddress" name="address" class="form-control" required>
+               </textarea>
+        </div>
+        <div class="form-group">
+            <label for="agree">I am a licensed Unreal Engine developer with access to version 4.4.3 </label>
+            <input type="checkbox" id="agree" required name="agree">
+        </div>
+        <div class="form-group">
+            <!--<div id="originalHash">Loading the hash...</div>-->
+            <input id="originalHashInput" type="hidden" name="originalHash" required />
+            <label for="chash">Parent Hash:</label>
+            <input id="chash" type="text" name="userHash" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <input type="button" onclick="submitForm()" value="Submit" class="btn btn-default" />
+        </div>
+	</fieldset>
+</form>

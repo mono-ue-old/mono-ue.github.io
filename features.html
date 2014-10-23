@@ -1,0 +1,124 @@
+---
+layout: content
+title: Features
+group: navigation
+order: 4
+---
+<h1>Tech Features</h1>
+
+	<p class="lead">Some of the exciting features provided by <em>Mono for
+	Unreal Engine.</em></p>
+
+<h2>Hot Reload</h2>
+
+	<p>We fully support Unreal Engine's <em>Hot Reload</em>
+	functionality.
+
+	<p>This means that whenever you rebuild your C# code in
+	Xamarin Studio, your changes are immediately reloated into the
+	Unreal Editor.    The changes are also reflected with running
+	games in the editor, so you can quickly iterate on your
+	design. 
+
+	<p>On fast machines, the process of rebuilding the C# code and
+	reloading it live takes less than a second.  It feel
+	instantaneous.
+	
+<h2>Xamarin Studio</h2>
+
+	<p>While hard core hackers are happy editing their game code
+	with <code>vi</code> or <code>emacs</code> and have the hot
+	reload functionality do all the work for them, we have also
+	provided a nice integration with
+	the <a href="http://www.monodevelop.com">MonoDevelop</a> (and 
+	Xamarin's branded
+	version, <a href="http://xamarin.com/studio"> Xamarin
+	Studio</a>). 
+
+	<p>It provides a first-class IDE with rich, accurate code
+	completion, and powerful refactoring and analysis tools.
+
+<h2>Debugging</h2>
+
+	<p>Full support for C# debugging is included. Simply launch
+	your game from Xamarin Studio as a standalone editor or mobile
+	preview process, and it will connect to the runtime debug
+	engine, giving you full access to a rich suite of abilities
+	to inspect and debug your code.
+	
+	<img src="{{site.baseurl}}/images/debugger.png">
+
+<h2>Seamless Blueprint and Editor Integration</h2>
+
+	<p>Your C# classes that are exposed to Unreal Engine are fully
+	accessible from Blueprint and the Unreal Editor, just like
+	Blueprint-accessible C++ classes.
+
+	<P>You can continue using Blueprint for simple logic and use
+	C# when things get more complicated.
+
+	<p>And you can consume your C# classes from Blueprint.
+	
+<h2>Mixed C#/C++/Blueprint Solutions</h2>
+
+	<p>The same tool that we use to generate bindings to
+	Blueprint-exposed Unreal Engine APIs is integrated into Unreal
+	Build Tool, and will automatically generate bindings to all of
+	your Blueprint-exposed C++ gameplay code and engine
+	modifications.
+	
+<h2>Native Access</h2>
+
+	<p>In addition to the automatically generated bindings to
+	Blueprint-exposed Unreal C++ code, the Mono runtime allows
+	accessing any native APIs, including custom C/C++ code and the
+	native platform API.
+
+	<p>You can manually bind C APIs using
+	<a href="http://www.mono-project.com/Interop_with_Native_Libraries">Platform
+	Invoke</A> services, or use <a href="https://github.com/mono/CppSharp">CppSharp</a>
+	to generate bindings to C++ APIs.
+		
+	<h2>Async Programming</h2>
+	
+	<p>The <a href="{{site.baseurl}}/getting-started.html">Getting Started</a>
+	tutorial shows the low-level approach to defining
+	behaviors, but this approach can become cumbersome when
+	defining more complex behaviors and AI.  Luckily, this task
+	can be simplified with async programming, a C# compiler feature
+	that rewrites what appears to be linear code into a state machine.
+
+	<p>For more details about how this helps writing complex
+	gameplay logic, see our overview of
+	<a href="{{site.baseurl}}/async-programming.html">async programming</a>.
+
+<h2>API Profile</h2>
+
+	<p>The <em>Mono Mobile Profile</em> is the core API profile in
+	the support for Unreal Engine.
+
+	<p>The Mono Mobile Profile removes a number of bloated .NET
+	features including <code>System.Configuration </code> support
+	from the Base Class Libraries. This is the same API profile
+	used by Xamarin's Android, iOS and Mac products.
+
+	<div class="note"><p>Note: The Mobile Profile is <em>not</em> ABI
+	compatible with existing assemblies compiled for a different
+	profile (like the .NET desktop, Silverlight or Windows
+	Phone). You <em>must</em> recompile your source code to
+	generate assemblies targeting the Mobile profile.</p></div>
+
+	<p>A full list of the assemblies in our Mobile framework profile
+	can be found <a href="{{site.baseurl}}/framework-profile.html">here</a>.
+	
+<h2>Portable Class Libraries</h2>
+
+	<p>You can use Portable Class Libraries with Xamarin's Unreal
+	Engine support. This allows the same binary library to be
+	shared across a wide range of platforms without code modifications.</p>
+	
+	<p>To learn more about using Portable Class Libraries with
+	Xamarin, read our
+	<a href="/guides/cross-platform/application_fundamentals/pcl/introduction_to_portable_class_libraries">Introduction
+	to Portable Class Libraries</a> document.</p>
+

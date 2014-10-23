@@ -1,0 +1,225 @@
+---
+layout: content
+title: Getting Started
+group: navigation
+order: 3
+---
+
+<h1>Getting Started</h1>
+<p class="lead">Starting a new project based on C# and Blueprints.</p>
+
+<h2>Creating the C# Solution</h2>
+
+	<p>Getting started with Mono for Unreal Engine is easy. You
+	can start adding C# code to your projects in a few easy
+	steps.</p>
+	
+	<ol>
+		<li>First, navigate to the File menu and click "Add
+		new Mono class to
+		project..."<p><img src="images/add_new_class.png"
+		height=400px /></p></li>
+	
+		<li>A dialog will appear asking which parent class you
+		want to extend from. For this tutorial, let's choose
+		the <code>Actor</code>
+		class.<p><img src="images/add_actor.png"  height=400px
+		/></p></li>
+	
+		<li>Click "Next" in the dialog. The next page will ask
+		you to name your new <code>Actor</code>. Let's name
+		ours <code>TestActor</code>, and click "Create
+		Class".<p><img src="images/create_class_wizard.png"
+		height=400px /></p></li>
+		 
+		<li>After creating the class, Unreal Engine will ask
+		if you'd like to edit the code now. Click yes, and
+		Xamarin Studio will load, showing your newly created
+		project.  These classes are accessible from the Unreal
+		Editor.<p><img src="images/empty_unreal_project.png"
+		height=400px /></p></li>
+	</ol>
+	
+	<p>Congratulations! You've made your first C# class in Unreal. Now let's do something with it!</p>
+
+<h2>The Basics</h2>
+
+<p>Our <code>Actor</code>'s behavior will involve controlling
+a mesh and rotating it on the screen based on parameters that
+we can set from the Editor.</p>
+
+<p>To start off with, you should have a blank solution with one project inside of it, called <code>MyProjectMono</code>. If you're not quite sure what a solution is
+and what makes it different than a project, don't fret--we'll learn about that later.</p>
+
+<p>Inside your <code>MyProjectMono</code> project, you should have three folders and a file called <code>TestActor.cs</code>. This is the file we're interested in right now.
+Open it up; it should look like this:</p>
+
+{% highlight c# %}
+using System;
+using unrealEngine.Runtime;
+using UnrealEngine.Engine;
+
+namespace MyProjectMono
+{
+	public class TestActor : Actor
+	{
+		// Constructor called when creating or loading an object
+		protected TestActor(PostConstructInitializeProperties pcip)
+			: base(pcip)
+		{
+		}
+
+		//Constructor for hot-reloading. UProperties will already be initialized, but any purely managed fields or data
+		//will need to be set up
+		protected TestActor(IntPtr nativeObject)
+			: base(nativeObject)
+		{
+		}
+	}
+}
+{% endhighlight %}
+
+<h4>Properties</h4>
+
+	<p>Let's add some properties to this.
+
+	<p>We want the properties to be surfaced to the Unreal Editor
+	both to be settable by the game designer, as well to allow the
+	object properties to be serialized automatically by Unreal
+	Engine.
+
+	<p>To do this, in addition to declaring the C# properties, we
+	simple add the <code>[UProperty]</code> attribute to each
+	property.   There are a number of configuration options to
+	use, but in this case, we merely want to specify where in the
+	UI the properties should be displayed.
+
+	<p>Put the following code inside <code>TestActor</code>, above the constructors.</p>
+
+{% highlight c# %}
+[UProperty(Category = "Static Mesh")]
+public Subobject<StaticMeshComponent> MeshComponent { get; set; }
+
+[UProperty(Category = "Movement")]
+public float RotationRate { get; set; }
+
+[UProperty(Category = "Movement")]
+public bool RotateClockwise { get; set; }
+
+[UProperty(Category = "Movement")]
+public float Velocity { get; set; }
+{% endhighlight %}
+
+<p>Now that our <code>TestActor</code> is defined, designers
+can create instances of <code>TestActor</code> by selecting it
+from the list of available objects in Unreal Engine Editor and
+setting the parameters, as illustrated by the screnshot below:</p>
+
+<img src="images/properties.png">
+
+<p><em>Note that any properties that have been decorated
+with <code>[UProperty]</code> are automatically serialized for
+us, making them editable through the editor.</em></p>
+
+<h4>Initialization</h4>
+
+	<p>When our <code>TestActor</code> object is constructed,
+	Unreal invokes a special constructor that takes
+	a <code>PostConstructInitializeProperties</code> parameter.
+	We can use this to create any subobjects that we need to
+	initialize. In our example, we're going to create a <em>static
+	mesh</em> to give our <code>TestActor</code> a 3D model.</p>
+	
+	<p>We can initialize our mesh object by putting the following code into the first constructor:</p>
+
+{% highlight c# %}
+protected TestActor(PostConstructInitializeProperties PCIP) : base(PCIP)
+{
+	MeshComponent = PCIP.CreateDefaultSubobject&lt;StaticMeshComponent&gt;(this, new Name("StaticMeshComponent0"));
+	SetRootComponent(MeshComponent);
+
+	RotateClockwise = true;
+	RotationRate = 20.0f;
+}
+{% endhighlight %}
+
+	<p>This sets some default values for our <code>TestActor</code>.</p>
+
+<h4>Behavior</h4>
+
+	<p>Now it's time to give our <code>Actor</code> some
+	behavior. Let's override the
+	<code>ReceiveTick</code> method. <code>ReceiveTick</code> is Unreal Engine's update method, 
+	invoked on every frame. Add the following method to our <code>TestActor</code> class:</p>
+
+{% highlight c# %}
+protected override void ReceiveTick(float DeltaSeconds)
+{
+	float yawDelta = RotationRate * DeltaSeconds;
+	if (!RotateClockwise)
+		yawDelta *= -1;
+
+	Rotator rotation = ActorRotation;
+	rotation.Yaw += yawDelta;
+
+	var forwardVec = ActorForwardVector;
+	var location = ActorLocation;
+	location += DeltaSeconds * Velocity * forwardVec;
+
+	SetActorLocationAndRotation(ref location, rotation, true);
+}
+{% endhighlight %}
+
+	<p>This changes our <code>TestActor</code>'s rotation by an
+	amount determined by the <code>RotationRate</code>
+	and <code>RotateClockwise</code> properties, normalized
+	by <code>DeltaSeconds</code>.</p>
+
+<h2>Solutions and Projects</h2>
+
+	<p>Mono for Unreal Engine uses the Xamarin Studio convention of
+	Solutions and Projects to
+	organize code, and the setup is similar to Visual Studio's C++
+	Solutions that you're used to in Unreal Engine. A Solution
+	contains one or more Projects, and is typically used to
+	organize libraries and individual platform launchers.</p>
+	
+	<p>We can add C# functionality to an Unreal Engine project by
+	creating a new <span class="uiitem">Xamarin for Unreal
+	Engine</span> Solution or Project type. The organization of
+	our Solution depends on the platforms we want our game to
+	support.</p>
+
+<h4>Organizing the Solution</h4>
+
+	<p>We can target a single platform with a Solution that
+	contains a single Project for C# code.  When compiled,
+	this code loads directly into Unreal Editor or into your game.</p>
+	
+	<p>Supporting multiple platforms - including mobile platforms
+	- requires a different architecture. In a multi-platform
+	solution, all game code goes into a Library Project. This can
+	be either a native Library Project for a single platform or a
+	Portable Class Library (PCL) that contains code shared by
+	multiple platforms.  A PCL can use all the APIs available in
+	the <a href="http://developer.xamarin.com/guides/cross-platform/application_fundamentals/pcl/introduction_to_portable_class_libraries/">Portable
+	Class Libraries API</a> as well as the Xamarin.Unreal.dll
+	API. This shared code is used inside the Editor as well as
+	inside the game window (or the simulated mobile game window)
+	in Unreal Engine.</p>
+	
+	<p>The code to target each individual platform is housed in
+	new Projects of type
+	<span class="uiitem">Unreal Engine</span>. For example, an iOS
+	game would be housed in a Project type
+	of <span class"uiitem">Android > Unreal Engine
+	Project</span>). The Unreal Engine Project type contains a
+	platform-specific host that boots the application, gives
+	control to the native binding, and calls into Unreal Engine to
+	start the game at a given point in time.</p>
+	
+	<p>The screnshot below is an example of what a multi-platform Solution might look like in Xamarin Studio:</p>
+	
+	<p><a href="images/organization.png"><img src="images/organization.png"/></a></p>
+	
+<script src="javascripts/scale.fix.js"></script>

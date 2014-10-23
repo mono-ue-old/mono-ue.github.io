@@ -1,0 +1,24 @@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{site.baseurl}}/">Mono for Unreal Engine</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          	{% assign sorted_pages = site.pages | sort:"order" %}
+
+			{% for node in sorted_pages %}
+				{% if node.group == "navigation" %}
+					{% if page.url == node.url %}
+					<li class="active"><a href="{{site.baseurl}}{{node.url}}" class="active">{{node.title}}</a></li>
+					{% else %}
+					<li><a href="{{site.baseurl}}{{node.url}}">{{node.title}}</a></li>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+			{% assign group = nil %}
+          </ul>
+        </div>
+        <!--/.navbar-collapse -->
+      </div>
+    </div>

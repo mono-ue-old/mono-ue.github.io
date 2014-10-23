@@ -1,0 +1,177 @@
+---
+layout: content
+title: Installation
+group: navigation
+order: 2
+---
+<h1>Installing Mono for Unreal Engine</h1>
+<p class="lead">Building Unreal Engine with the Mono plugins.</p>
+
+	<p>To install <em>Mono for Unreal Engine</em>, you'll need to
+	build the Unreal Editor from source and then add the Mono
+	extension that enables the use of C# with Unreal Engine.
+
+	<p>The current add-in has been tested with version 4.4.   This
+	page describes how to setup Unreal Engine to allow C#
+	development with Mono, and how to setup your MonoDevelop or
+	XamarinStudio IDEs to write your C# code.
+	
+<h2>Building Unreal Engine from Source</h2>
+
+
+
+	<ol>
+		<li>First, clone the Unreal Engine repo using Git. It
+		can be
+		found <a href="https://github.com/EpicGames/UnrealEngine">here</a>.</li>
+		
+		<li>Check out the 4.4 branch. You can do this by
+		running: <pre><code>git checkout 4.4</code></pre> You
+		can also use one of the git desktop applications if
+		you prefer.</li>
+		
+		<li>Download the required 4.4 dependencies. There are
+		two zip
+		files: <a href="https://github.com/EpicGames/UnrealEngine/releases/download/4.4.3-release/Required_1of2.zip">here</a>
+		and <a href="https://github.com/EpicGames/UnrealEngine/releases/download/4.4.3-release/Required_2of2.zip">here</a></li>
+		
+		<li>Unzip these dependencies into the directory you
+		cloned the UrealEngine repo to. Be careful to make
+		sure the folders are merged together, not overwritten
+		(on Mac, this can be done by Option->dragging the
+		folder into the UnrealEngine directory, and clicking
+		"Keep Newer" when prompted).</li>
+	</ol>
+
+<h3>Windows</h3>
+
+<ol>
+	<li>To build the source on Windows, you need Visual Studio
+	2013 installed. You can use the free version if you do not own
+	it, <a href="http://www.microsoft.com/en-us/download/details.aspx?id=40787">Visual
+	Studio 2013 Express</a>.</li>
+	
+	<li>Install the June 2010 DirectX runtime. This can be
+	found <a href="http://www.microsoft.com/en-us/download/details.aspx?id=8109">here</a>.</li>
+	
+	<li>In the UnrealEngine folder (the directory you cloned the
+	repo into), run <code>GenerateProjectFiles.bat</code>. This
+	should run quickly.</li>
+	
+	<li>Now you can open the Visual Studio Solution that you just
+	generated (it should be called <code>UE4.sln</code>).</li>
+	
+	<li>Once Visual Studio has opened, set the solution
+	configuration to Development Editor, and set the platform to
+	Win64. Build the project by selecting Build from the
+	dropdown menu. This could take a while (up to 40 minutes,
+	depending on your system), so go ahead and take a break
+	here. Grab a coffee or something.</li>
+	
+	<li>You can then run the editor from Visual Studio by setting
+	the UE4 project as your startup project and pressing the green
+	triangle in toolbar (or pressing F5).</li>
+	
+	<li>Finally, you can setup your Windows shell so that you can
+	interact with .uproject files.  Find the file
+	called <code>UnrealVersionSelector-Win64-Shippping.exe</code>
+	in the <code>UnrealEngine/Engine/Binaries/Win64/_</code>
+	folder and run it.  Now, you'll be able to double-click
+	.uproject files to load the project, or right click them  
+	to quickly update Visual Studio files. </li>
+</ol>
+
+<h3>Mac</h3>
+
+	<ol>
+		<li>Install Xcode 5.1. You can find this in the app
+		store, or <a href="https://itunes.apple.com/us/app/xcode/id497799835">here</a>.</li>
+		
+		<li>From the UnrealEngine folder,
+		run <code>GenerateProjectFiles.command</code> (if in
+		the finder) or <code>GenerateProjectFiles.sh</code>
+		(if in the terminal).  It should execute fairly
+		quickly.</li>
+		
+		<li>Open the <code>UE4.xcodeproj</code> file.</li>
+		
+		<li>You can use this project to compule the UE4
+		Editor. Select the correct target in the top left of
+		the window (it should be UE4Editor - Mac, targeted for
+		My Mac).  Then, build the project by going
+		to <code>Product -> Build For -> Running</code> in the
+		menus. This can take a while (up to 40 minutes), so
+		feel free to take a break and grab a coffee or
+		something.</li>
+		
+		<li>After the project finishes compiling, you can run
+		the editor by going to <code>Product -> Run</code> in
+		the menu.</li>
+		
+	</ol>
+
+<h2>Adding Mono for Unreal Engine</h2>
+
+	<p>After you've successfuly built Unreal Engine 4.4 from the source, you can add the <em>Mono for Unreal Engine</em> plugins. Here's how to do that:</p>
+
+	<ol>
+	
+		<li>Download the <em>Mono for Unreal Engine</em> zip
+		file from
+		our <a href="{{site.baseurl}}/download.html">Download</a>
+		page (if you haven't already). The file should be
+		called <code>XamarinUE4.zip</code>.</li>
+		
+		<li>Extract the zip file into the UnrealEngine source
+		directory, again making sure that the folders are
+		merged, not overwritten, in the same way as
+		before.</li>
+		
+		<li>You can then run the terminal commands in the
+		UnrealEngine directory (if using a desktop app, you
+		can launch a terminal/console window from the app with
+		the UnrealEngine repo selected): 
+		<pre><code>git checkout 4.4
+git checkout -b 4.4-xamarin
+git am Engine/Plugins/XamarinUE4/Patches/*</code></pre>
+		
+		This should create a new git branch called
+		"4.4-xamarin" with the <em>Mono for Unreal
+		Engine</em> patches applied and committed.</li>
+		
+		<li>You can now rebuild the Unreal Editor the same way
+		as you did before; the <em>Mono for Unreal Engine</em>
+		plugins and binding assemblies will be included
+		automatically.</li>
+	</ol>
+
+<h2>Installing the Xamarin Studio Addin</h2>
+
+	<ol>
+		<li>Install Xamarin Studio (it can be downloaded from
+		the <a href="https://xamarin.com">Xamarin
+		website</a>.</li>
+		
+		<li>Switch your Xamarin Studio update channel to
+		Alpha, then download all updates. Mono for Unreal
+		Engine requires Xamarin Studio 5.6+ (or MonoDevelop
+		5.6+), which are both currently in Alpha. After
+		switching your update channel, allow Xamarin Studio to
+		download and install all updates.</li>
+		
+		<li>Open Xamarin Studio, and open the Add-in Manager.</li>
+		
+		<li>Click the "Install from file" button, browse to
+		the directory <code>UnrealEngine/Engine/Plugins/XamarinUE4</code>, 
+		select the file <code>XamarinStudio.Unreal_1.0.mpack</code>, and
+		install it.</li>
+		
+	</ol>
+
+<h2>Start Creating!</h2>
+
+	<p>Now that you have <em>Mono for Unreal Engine</em> and all
+	the dependencies installed, you can see how to get started by creating
+	a new project or adding C# to an existing project on
+	our <a href="{{site.baseurl}}/getting-started.html">Getting
+	Started</a> page.</p>

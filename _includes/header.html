@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ page.title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- syntax highlighting CSS -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.3.0/css/normalize.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.3.0/css/foundation.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/0.9.9/magnific-popup.css" />
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans" />
+	<link rel="stylesheet" href="/css/main.css?version={{site.time | date_to_xmlschema | cgi_escape}}" />
+	<script src="javascripts/scale.fix.js"></script>
+    </head>
+    <body>
+
+    <div id="main-wrapper">
+      <div id="header-nav" class="contain-to-grid">
+        <nav class="top-bar" data-topbar>
+          <ul class="title-area">
+            <li class="name">
+              <h1><a href="/">Mono for Unreal Engine</a></h1>
+            </li>
+            <li class="toggle-topbar"><a href="#">Menu</a></li>
+          </ul>
+
+          <section class="top-bar-section">
+            <!-- Right Nav Section -->
+            <ul class="right">
+              <li {% if page.navgroup == "home" %}class="active"{% endif %}><a href="/"><i class="fa fa-home"></i> Home</a></li>
+              <li {% if page.navgroup == "download" %}class="active"{% endif %}><a href="/download/"><i class="fa fa-download"></i> Download</a></li>
+              <li {% if page.navgroup == "docs" %}class="active"{% endif %}><a href="/docs/"><i class="fa fa-book"></i> Documentation</a></li>
+              <li {% if page.navgroup == "news" %}class="active"{% endif %}><a href="/news/"><i class="fa fa-bullhorn"></i> News</a></li>
+              <li {% if page.navgroup == "community" %}class="active"{% endif %}><a href="/community/"><i class="fa fa-github"></i> Community</a></li>
+              <li class="has-form">
+                <form id="header-searchform" action="https://www.google.com/search" method="get">
+                  <div class="row collapse">
+                    <div class="small-11 medium-9 large-10 columns">
+                      <input name="as_sitesearch" type="hidden" value="www.mono-project.com" />
+                      <input name="q" type="text" placeholder="Search..." />
+                    </div>
+                    <div class="small-1 medium-3 large-2 columns">
+                     <button type="submit" class="postfix button"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                </form>
+              </li>
+            </ul>
+          </section>
+        </nav>
+      </div>
+      

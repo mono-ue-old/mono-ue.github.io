@@ -1,0 +1,107 @@
+---
+layout: content
+title: Async Programming
+---
+
+<h1>Async Programming</h1>
+
+	<p class="lead">Complex code made simple.</em></p>
+
+	<p>Async programming is a compiler feature of the C# language
+	that rewrites what appears to be linear code into a state machine.
+	This makes it much easier to write and understand complex
+	gameplay logic.
+	
+	<p>In async programming, state is tracked using the natural
+	idioms of the language. We design the workflow based on
+	the natural primitives of the language - we insert
+	the <code>await</code> prefix in places where we want to stop
+	execution, and our application resumes execution on the tick 
+	where it left off.
+	
+	<p>ToKey see this in action, we override the <code>Update</code>
+	 method in <code>Actor</code>, as illustrated by the following code:
+	
+{% highlight c# %}
+protected override async Task Update (CancellationToken token)
+{
+	
+}
+{% endhighlight %}
+
+
+	<p>A behavior that uses async styles might look like this:</p>
+
+{% highlight c# %}
+protected override async Task Update (CancellationToken token)
+{
+    while (Health > 0){
+	// chase and shoot
+	while (Target.Visible && Ammo > 0){
+	    await MoveTo (ComputeApproach (Target));
+            await AnimateAsync ("shoot");
+            await ShootAt (Target);
+            await AnimateAsync ("reload");
+	}
+
+	// out of ammo, try to reload
+        if (Ammo == 0){
+	    // Shows Task.WaitAny to await for multiple operations:
+	    // either finds a recharge station, or try to use a 
+            // teleport to quickly escape
+            await Task.WaitAny (FindRechargeStation (), FindTeleportStation ())
+        }
+        await MoveTo (ComputePatrolPoint ());
+    }
+    //
+    // We get out of the loop, now run a new loop to show
+    // blinking before we vanish
+    //
+    var original = TintColor;
+    for (int i = 0; i < 3; i++){
+        TintColor = Yellow;
+        await Task.Delay (200);
+        TintColor = original;
+        await Task.Delay (200);
+    }
+
+    // Play the final animation, and then die
+    await AnimateAsync ("destroy");
+    Destroy ();
+}
+{% endhighlight %}
+   
+	<p>This code snippet controls an actor's weapon shooting and
+	animations. You can see how the <code>await</code> keyword is
+	useful here: in the first <code>while</code> loop, you can see
+	a sort of state machine described--first, the Actor attempts
+	to <code>MoveTo()</code> its target. When that is done, a
+	shooting animation is started
+	with <code>AnimateAsync()</code>, followed by a shooting
+	behavior through
+	<code>ShootAt()</code>. Once the shooting is done, a reload
+	animation is started. These states are looped until the target
+	is no longer visible or the actor runs out of ammo. All of
+	these states are traversed across a large number of frames,
+	instead of each method being called every tick.</p>
+	
+<h4>Low-Level Details: TickSynchronizationContext</h4>
+
+	<p>During the execution of the
+	<code>Update</code> method, the thread's synchronization
+	context is replaced with a game-specific synchronization
+	context that will resume execution on the next Tick.</p>
+	
+	<p>Any operation that is queued inside the <code>Update</code> method will
+	not be dispatched by default into the default synchronization
+	context (which would typically have been just an idle handler
+	on the main loops).</p>
+	
+	<p>Instead, the operations are only resumed and executed
+	when Unreal invokes the <code>ReceiveTick</code> event. This
+	ensures that our code runs in the context that Unreal expects
+	it to run.</p>
+	
+	<p>If we need to queue tasks from the <code>Update</code>
+	method to be executed in a different synchronization context,
+	we need to manually request that.</p>

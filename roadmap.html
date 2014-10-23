@@ -1,0 +1,82 @@
+---
+layout: content
+title: Roadmap
+group: navigation
+order: 5
+---
+<h1>Future Roadmap</h1>
+<p class="lead">Where we plan to expand Mono for Unreal Engine.
+
+	<p>There are a number of areas in which we could take <em>Mono
+	for Unreal Engine</em> based on the community interest.
+
+	<p>In general, we are impressed by how well Mono and Unreal
+	Engine work together.    Here is a list of things that we hope
+	to add in the future.
+	
+<h2>F# Support</h2>
+
+	<p><img src="images/fsharp_logo.png" align="right"/>F# is a
+	strongly-typed functional programming language designed to run
+	on .NET. It combines the succinctness, expressivity and
+	composability of type-inferred functional programming, the
+	compile-time safety of strongly-typed code, and the runtime
+	support, libraries, interoperability, tools, and object model
+	of .NET.
+	
+	<p>We want to bring this power and flexibility to you in Unreal Engine.
+
+<h2>More Supported Platforms</h2>
+
+	<p>Our initial release supports Mac and Windows, since these
+	were the easiest to develop against and ship.
+
+	<p>Internally, we have proof of concepts running on Android
+	and iOS, and based on demand, we might complete those efforts.  
+
+	<p>Support for consoles depends on access to EpicGame's ports
+	of Unreal Engine to the consoles.
+	
+<h2>Blend the Unreal Engine APIs with Async</h2>
+
+	<p>Touched on in
+	our <a href="{{site.baseurl}}/tech-features.html">Tech
+	Featuresd</a> tutorial, async programming is a powerful
+	compiler feature that allows seemingly linear code to be
+	executed like a state machine, using the <code>await</code>
+	keyword.
+
+	<p>While you can use <code>await</code> already while
+	developing code, the UnrealEngine APIs would benefit from
+	getting an the async treatment, to allow the UnrealEngine APIs
+	to be composed with the .NET Task-based APIs.
+
+
+<h2>Sketches and Interactive Development</h2>
+
+	<p>We want to make it easy to connected the C# and F# REPLs and
+	<a href="http://developer.xamarin.com/guides/cross-platform/sketches/introduction/">
+	Xamarin Sketches</a> to Unreal Engine, making prototyping and
+	iteration even faster by allowing you to make changes in your
+	game's code in real time.
+
+<h2>Platform APIs</h2>
+
+	<p>On iOS, Android and Mac OS, Xamarin has provides access to the native APIs:
+
+	<ul>
+		<li><a href="http://androidapi.xamarin.com/">Android APIs</a>.</li>
+		<li><a href="http://iosapi.xamarin.com/">iOS APIs</a>.</li>
+		<li><a href="http://macapi.xamarin.com">Mac APIs</a></li>
+	</ul>
+	
+	<p>We want to make it possble to use these seamlessly together
+	with Unreal Engine, so that you can integrate fully with each
+	platform on which you ship your game.
+	
+	<p>Currently there are no bindings to Windows APIs from the
+	Mono runtime, but we may add these if there is enough demand.
+	Alternatively, you can manually bind C APIs using
+	<a href="http://www.mono-project.com/Interop_with_Native_Libraries">Platform
+	Invoke</A> services, or use <a href="https://github.com/mono/CppSharp">CppSharp</a>
+	to generate bindings to C++ APIs.
