@@ -1,0 +1,56 @@
+---
+layout: content
+title: Features
+group: navigation
+order: 6
+---
+
+<h1>Interop</h1>
+
+    <h4>Is the entire Unreal Engine API surfaced?</h4>
+
+	<p>We currently only surface the Blueprint API, and some
+	select APIs that are commonly used in games.
+
+	<p>We are adding more APIs to the binding as we learn what
+	developers are using.  
+
+    <h4>Can access existing Blueprints from C#?</h4>
+
+	<p>Yes, you can.   The build process will automatically
+	generate the bindings for your blueprints and you can consume
+	those as .NET objects.
+
+    <h4>I have some C++ code that I want to surface to C#, how do I do
+    this?</h4>
+
+    	<p>Use
+    	Mono's <a href="https://github.com/mono/CppSharp">CppSharp</a>
+    	project to access native C++ APIs.
+
+<h1>Platform Support</h1
+
+    <h4>What platforms are supported?</h4>
+
+	<p>The initial preview supports Mac and Windows as development
+	and deployment targets.   We have internal proof of concept
+	setups for Android and iOS.
+
+    <h4>Can I port this to XXX?</h4>
+
+    	<p>The code should be as portable as the intersection of
+    	Unreal Engine supported platforms and Mono supported
+    	platforms.
+
+	<p>You might need to do some work on your own to support
+	platforms that we do not support out of the box, but all of
+	the source required to build is available.
+
+    
+<h1>Sample Code</h1>
+
+	<h4>Do you have some sample games I can look at?</h4>
+
+	<p>Come back next week, we will be publishing the ShooterGame
+	sample, entirely rewritten in C#.
+	
