@@ -42,11 +42,119 @@ order: 6
 	platforms that we do not support out of the box, but all of
 	the source required to build is available.
 
-    
+    <h4>You did not answer my question.  What about Linux?</h4>
+
+    	<p>Yes, you can use this on Linux too.
+
+    <h4>Will this compile to JavaScript?</h4>
+
+	<p>While this is entire possible, this is a major time investment.
+	We currently do not have plans to do any of the work
+	associated with bringing this to the web.
+
+	<p>We want to focus on all the easy things first, as detailed
+	on our <a href="roadmap.html">roadmap</a>.
+
+	<p>But if there is enough demand to make this happen, we would
+	make it happen.
+
+<h1>Unreal Engine Support</h1>
+
+    <h4>What versions of Unreal Engine are supported?</h4>
+
+    	<p>Currently, the Mono integration that is distributed is done
+    	against Unreal Engine 4.4.
+
+	<p>If you want to use an earlier or later version of Unreal
+    	Engine, you would need to adjust the patch to work on newer
+    	versions of Unreal Engine on your own.
+	
 <h1>Sample Code</h1>
 
-	<h4>Do you have some sample games I can look at?</h4>
+    <h4>Do you have some sample games I can look at?</h4>
 
 	<p>Come back next week, we will be publishing the ShooterGame
 	sample, entirely rewritten in C#.
 	
+<h1>Licensing</h1>
+
+    <h4>How much does this cost?</h4>
+
+	<p>To redistribute code written with <em>Mono for Unreal
+	Engine</em>, you must have a commercial license to the Mono
+	runtime.
+
+	<p>These licenses are included in Xamarin's commercial
+	products for targeting Mac, Android and iOS.   
+	
+	<p>Xamarin product pricing starts at $0 for Starter Edition
+	and adds Visual Studio support at $999 per developer, per
+	platform.
+
+	<p>In addition, you still need to comply to your license
+	agreement with EpicGames for Unreal Engine.
+
+    <h4>Does Xamarin offer licenses for other platforms?</h4>
+
+	<p>Yes, commercial licensing for other platforms are available
+	at a similar price, they are just not listed on the
+	mobile-centric store page.
+	Contact <a href="mailto:hello@xamarin.com">hello@xamarin.com</a>
+	for a quote.
+
+<h1>Game Engines</h1>
+
+    <h4>Do you guys have plans to support any other game engines?</h4>
+
+    	<p>We love game engines, and we would like to assist other
+    	game engines to be powered by C#.   Feel free to contact
+    	Xamarin and your engine vendor for us to start a
+    	collaboration.
+
+<h1>Source Code Access</h1>
+
+    <h4>Why is the source code access so cumbersome?</h4>
+
+    	<p>We would love to make this a simpler process, but we need
+    	to abide by the terms of the Unreal Engine license that
+    	requires us to verify that you are an Unreal Engine licensee.
+
+	<p>We do welcome ideas on how to improve this though.   Use
+	our mono-ue@lists.xamarin.com to discuss.
+	
+    <h4>Could we contribute to the effort?</h4>
+
+    	<p>While we would love to give people direct access to the
+    	source code and contribute patches, we need to ensure that
+    	developers that access the code have licenses to Unreal
+    	Engine. 
+
+	<p>Managing this is cumbersome.   But if we could find a way
+	of granting people access to our code, provided they also have
+	access to the upstream github module, we could open things
+	up.
+
+<h1>Compilation</h1>
+
+    <h4>What compilation modes are available?</h4>
+
+	<p>While Mono supports various compilation combinations
+	(Mono's code gen, vs LLVM code gen; Just-in-Time, Just-in-Time
+	with pre-compiled assemblies, and full static compilation;
+	Incremental static compilation vs full batch compilation) the
+	integration just supports the most straightforward version for
+	each supported platform.
+
+	<p>This means that platforms that require static compilation
+	use the static compiler, as configured by default.  And the
+	other platforms use the JIT, with the default configuration
+	options.
+
+	<p>In both cases, you can tweak things to your pleasure, but
+	we do not provide any UI to make these changes for you.  You
+	might need to adjust manually your build files.
+
+    <h4>Will the above change?</h4>
+
+    	<p>Eventually, yes.  We currently are focused on
+    	the <a href="roadmap.html">Roadmap</a>. 
