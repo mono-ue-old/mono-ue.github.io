@@ -97,16 +97,16 @@ namespace MyProjectMono
 	<p>Put the following code inside <code>TestActor</code>, above the constructors.</p>
 
 {% highlight c# %}
-[UProperty(Category = "Static Mesh")]
+[UProperty, Category ("Static Mesh")]
 public Subobject<StaticMeshComponent> MeshComponent { get; set; }
 
-[UProperty(Category = "Movement")]
+[UProperty, Category ("Movement")]
 public float RotationRate { get; set; }
 
-[UProperty(Category = "Movement")]
+[UProperty, Category ("Movement")]
 public bool RotateClockwise { get; set; }
 
-[UProperty(Category = "Movement")]
+[UProperty, Category ("Movement")]
 public float Velocity { get; set; }
 {% endhighlight %}
 
