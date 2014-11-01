@@ -97,16 +97,21 @@ namespace MyProjectMono
 	<p>Put the following code inside <code>TestActor</code>, above the constructors.</p>
 
 {% highlight c# %}
-[UProperty, Category ("Static Mesh")]
-public Subobject<StaticMeshComponent> MeshComponent { get; set; }
+[UProperty, BlueprintVisible (ReadOnly = true), EditorVisible (ReadOnly = true)]
+[Category ("Static Mesh")]
+[UMetaData ("ExposeFunctionCategories", "Mesh,Rendering,Physics,Components|StaticMesh")]
+public Subobject<StaticMeshComponent> MeshComponent { get; private set; }
 
-[UProperty, Category ("Movement")]
+[UProperty, BlueprintVisible, EditorVisible]
+[Category ("Movement")]
 public float RotationRate { get; set; }
 
-[UProperty, Category ("Movement")]
+[UProperty, BlueprintVisible, EditorVisible]
+[Category ("Movement")]
 public bool RotateClockwise { get; set; }
 
-[UProperty, Category ("Movement")]
+[UProperty, BlueprintVisible, EditorVisible]
+[Category ("Movement")]
 public float Velocity { get; set; }
 {% endhighlight %}
 
@@ -135,7 +140,7 @@ us, making them editable through the editor.</em></p>
 {% highlight c# %}
 protected TestActor(PostConstructInitializeProperties PCIP) : base(PCIP)
 {
-	MeshComponent = PCIP.CreateDefaultSubobject&lt;StaticMeshComponent&gt;(this, new Name("StaticMeshComponent0"));
+	MeshComponent = PCIP.CreateDefaultSubobject&lt;StaticMeshComponent&gt;(new Name("StaticMeshComponent0"));
 	SetRootComponent(MeshComponent);
 
 	RotateClockwise = true;
@@ -159,14 +164,14 @@ protected override void ReceiveTick(float DeltaSeconds)
 	if (!RotateClockwise)
 		yawDelta *= -1;
 
-	Rotator rotation = ActorRotation;
+	Rotator rotation = GetActorRotation ();
 	rotation.Yaw += yawDelta;
 
-	var forwardVec = ActorForwardVector;
-	var location = ActorLocation;
+	var forwardVec = GetActorForwardVector ();
+	var location = GetActorLocation ();
 	location += DeltaSeconds * Velocity * forwardVec;
 
-	SetActorLocationAndRotation(ref location, rotation, true);
+	SetActorLocationAndRotation (location, rotation, true);
 }
 {% endhighlight %}
 
