@@ -140,7 +140,7 @@ us, making them editable through the editor.</em></p>
 {% highlight c# %}
 protected TestActor(PostConstructInitializeProperties PCIP) : base(PCIP)
 {
-	MeshComponent = PCIP.CreateDefaultSubobject&lt;StaticMeshComponent&gt;(new Name("StaticMeshComponent0"));
+	MeshComponent = PCIP.CreateDefaultSubobject<StaticMeshComponent>(new Name("StaticMeshComponent0"));
 	SetRootComponent(MeshComponent);
 
 	RotateClockwise = true;
